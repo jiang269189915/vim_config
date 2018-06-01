@@ -178,4 +178,5 @@ let Tlist_File_Fold_Auto_Close=1             " 自动折叠
 
 "YouCompleteMe config
 Bundle 'Valloric/YouCompleteMe'
-le g:ycm_golbal_ycm_extra_conf="~/.ycm_extra_conf.py"
+let g:ycm_golbal_ycm_extra_conf="~/.ycm_extra_conf.py"
+
