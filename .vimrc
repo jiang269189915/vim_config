@@ -122,8 +122,8 @@ set formatoptions+=m
 set formatoptions+=B  
 
 "ctags config
-set tags=tags;
-set autochdir
+"set tags=tags;
+"set autochdir
 
 "cscope config
 if filereadable("cscope.out") 
@@ -176,4 +176,6 @@ let Tlist_Exit_OnlyWindow=1                  " 如果Taglist窗口是最后一�
 let Tlist_Use_Right_Window=0                 " 在右侧窗口中显示
 let Tlist_File_Fold_Auto_Close=1             " 自动折叠
 
+"YouCompleteMe config
 Bundle 'Valloric/YouCompleteMe'
+le g:ycm_golbal_ycm_extra_conf="~/.ycm_extra_conf.py"
