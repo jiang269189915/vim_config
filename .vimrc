@@ -45,7 +45,9 @@ set guifont=Monaco:h20
 
 "自动加载修改后的文件
 set autoread
-
+set autoindent
+set smartindent
+set cindent
 "针对不同文件类型采用不同缩进格式
 filetype indent on
 
@@ -75,7 +77,7 @@ set smartcase
 
 set tabstop=4
 set shiftwidth=4
-
+set softtabstop=4
 "自动转化tab为空格
 set expandtab
 
@@ -88,7 +90,7 @@ set foldenable
 " syntax    使用语法定义折叠  
 " diff      对没有更改的文本进行折叠  
 " marker    使用标记进行折叠, 默认标记是 {{{ 和 }}} 
-set foldmethod=indent
+"set foldmethod=indent
 " 在左侧显示折叠的层次  
 "set foldcolumn=4 
 
@@ -176,7 +178,9 @@ let Tlist_Exit_OnlyWindow=1                  " 如果Taglist窗口是最后一�
 let Tlist_Use_Right_Window=0                 " 在右侧窗口中显示
 let Tlist_File_Fold_Auto_Close=1             " 自动折叠
 
-"YouCompleteMe config
-Bundle 'Valloric/YouCompleteMe'
+"YouCompleteM _conf=0confmg
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloost/syntastic'
 let g:ycm_golbal_ycm_extra_conf="~/.ycm_extra_conf.py"
-
+let g:ycm_key_invoke_completion = ""
+let g:ycm_confirm_extra_conf=0
