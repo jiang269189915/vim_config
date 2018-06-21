@@ -1,11 +1,10 @@
 "vim configuration
-set nocompatible              " be iMproved, required
+"set nocompatible              " be iMproved, required
 filetype off                  " required
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
+"alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
@@ -45,9 +44,7 @@ set guifont=Monaco:h20
 
 "自动加载修改后的文件
 set autoread
-set autoindent
-set smartindent
-set cindent
+
 "针对不同文件类型采用不同缩进格式
 filetype indent on
 
@@ -62,7 +59,6 @@ set paste
 "显示行列号
 set number
 set ruler
-
 "括号配对
 set showmatch
 
@@ -78,6 +74,7 @@ set smartcase
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+
 "自动转化tab为空格
 set expandtab
 
@@ -114,10 +111,10 @@ syntax on
 " 自动判断编码时，依次尝试以下编码：  
 "set fileencodings=utf-8,gb18030,default  
 " gb18030 最好在 UTF-8 前面，否则其它编码的文件极可能被误识为 UTF-8  
-  
+
 " Use Unix as the standard file type  
 set ffs=unix,dos,mac  
-  
+
 " 如遇Unicode值大于255的文本，不必等到空格再折行。  
 set formatoptions+=m  
 " 合并两行中文时，不在中间加空格：  
@@ -150,7 +147,7 @@ if has("cscope")
     " add any cscope database in current directory
     if filereadable("cscope.out")
         cs add cscope.out
-    " else add the database pointed to by environment variable
+        " else add the database pointed to by environment variable
     elseif $CSCOPE_DB !=""
         cs add $CSCOPE_DB
     endif
@@ -180,7 +177,85 @@ let Tlist_File_Fold_Auto_Close=1             " 自动折叠
 
 "YouCompleteM _conf=0confmg
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloost/syntastic'
-let g:ycm_golbal_ycm_extra_conf="~/.ycm_extra_conf.py"
-let g:ycm_key_invoke_completion = ""
-let g:ycm_confirm_extra_conf=0
+"Plugin 'scrooloost/syntastic'
+set completeopt=longest,menu "让vim的补全菜单行为与一般IDE一致
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_min_num_identifier_candidate_chars = 2
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_indentifiers_from_tag_files = 1
+let g:ycm_complete_in_strings=1
+let g:ycm_key_invoke_completion = '<C-z>'
+let g:ycm_confirm_extra_conf = 0
+"set completeopt=menu,menuone
+"let g:ycm_key_list_select_completion = ['<k>']
+"let g:ycm_key_list_select_completion = ['<j>']
+noremap <c-z> <NOP>
+
+" 跳转到定义处, 分屏打开
+let g:ycm_goto_buffer_command = 'horizontal-split'
+nnoremap <leader>gj :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gi :YcmCompleter GoToDefinitionElaseDeclaretin<CR>
+let g:ycm_semantic_triggers =  {
+            \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+            \ 'cs,lua,javascript': ['re!\w{2}'],
+            \ }
+"whitelist
+let g:ycm_filetype_whitelist = {
+            \"c":1,
+            \"cpp":1,
+            \"py":1,
+            \"hpp":1
+            \}
+
+"将键盘上的F4功能键映射为添加作者信息的快捷键  
+map <F4> ms:call TitleDet()<cr>'s  
+function AddTitle()  
+    call append(0,"/*******************************************************************************")  
+    call append(1," * Author     : wwjiang")  
+    call append(2," * Email  : jww5310@163.com")  
+    call append(3," * Last modified : ".strftime("%Y-%m-%d %H:%M"))  
+    call append(4," * Filename   : ".expand("%:t"))  
+    call append(5," * Description    : ")  
+    call append(6," * *****************************************************************************/")  
+    echohl WarningMsg | echo "Successful in adding the copyright." | echohl None  
+endf 
+"更新最近修改时间和文件名  
+function UpdateTitle()  
+    normal m'  
+    execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'  
+    normal "  
+    normal mk  
+    execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'  
+    execute "noh"  
+    normal 'k  
+    echohl WarningMsg | echo "Successful in updating the copy right."| echohl None  
+endfunction  
+
+"判断前10行代码里面，是否有Last modified这个单词，  
+"如果没有的话，代表没有添加过作者信息，需要新添加；  
+"如果有的话，那么只需要更新即可  
+function TitleDet()  
+    let n=1  
+    while n < 10  
+        let line = getline(n)  
+        if line =~'^\#\s*\S*Last\smodified:\S*.*$'  
+            call UpdateTitle()  
+            return  
+        endif  
+        let n = n + 1  
+    endwhile  
+    call AddTitle()  
+endfunction  
+
+"选中复制
+vmap <C-c> "+y
+
+set enc=utf-8
+set autoindent
+set smartindent
+set cindent
+set cindent
