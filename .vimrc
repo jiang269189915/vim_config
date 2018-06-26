@@ -215,11 +215,11 @@ let g:ycm_filetype_whitelist = {
 map <F4> ms:call TitleDet()<cr>'s  
 function AddTitle()  
     call append(0,"/*******************************************************************************")  
-    call append(1," * Author     : wwjiang")  
-    call append(2," * Email  : jww5310@163.com")  
-    call append(3," * Last modified : ".strftime("%Y-%m-%d %H:%M"))  
-    call append(4," * Filename   : ".expand("%:t"))  
-    call append(5," * Description    : ")  
+    call append(1," * Author: wwjiang")  
+    call append(2," * Email: jww5310@163.com")  
+    call append(3," * Last modified: ".strftime("%Y-%m-%d %H:%M"))  
+    call append(4," * Filename: ".expand("%:t"))  
+    call append(5," * Description: ")  
     call append(6," * *****************************************************************************/")  
     echohl WarningMsg | echo "Successful in adding the copyright." | echohl None  
 endf 
@@ -259,3 +259,7 @@ set autoindent
 set smartindent
 set cindent
 set cindent
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
